@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.css" rel="stylesheet">
+    <style>
+        #lovely {
+            font-size: 30px;
+            width: 500px;
+            height: 400px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -250px;
+            margin-top: -200px;
+            color: red;
+            font-weight: bold;
+        }
+
+        body {
+            height: 100%;
+            overflow: hidden
+        }
+    </style>
+</head>
+
+<body>
+    <style>
+        .ball {
+            width: 150px;
+            height: 200px;
+            border-radius: 50%;
+            background: url(./f.jpg) no-repeat;
+            background-size: cover;
+            margin: 400px;
+        }
+    </style>
+    <div id="ball" class="ball animated slideInDown"></div>
+    <div id="lovely"></div>
+    <script>
+            // Infinity
+            function cartoon() {
+            setTimeout(function () {
+                ball.classList.remove('slideInDown');
+                ball.classList.add('rubberBand');
+            }, 1000);
+            setTimeout(function () {
+                ball.classList.remove('rubberBand');
+                ball.classList.add('flip');
+            }, 2000);
+            setTimeout(function () {
+                ball.classList.remove('flip');
+                ball.classList.add('rotateOutUpRight');
+            }, 3000);
+            setTimeout(function () {
+                ball.classList.remove('rotateOutUpRight');
+                ball.classList.add('zoomInDown');
+            }, 4000);
+            setTimeout(function () {
+                ball.classList.remove('zoomInDown');
+                ball.classList.add('hinge');
+            }, 5000);
+            setTimeout(function () {
+                ball.classList.remove('hinge');
+                ball.classList.add('lightSpeedIn');
+            }, 6000);
+            setTimeout(function () {
+                ball.classList.remove('lightSpeedIn');
+                ball.classList.add('flip');
+                ball.classList.add('infinite');
+
+            }, 6000);
+        }
+        cartoon();
+    
+            // setInterval( function () {
+            //     cartoon()
+            // },1000 * 7);
+        </script>
+    <script>
+        function heart() {
+            // var flake = document.createElement('div');
+            var flake = new Image();
+            flake.width = 40;
+            flake.height = 40;
+            flake.src = 'hua.png';
+            flake.style.cssText = 'position:absolute;color:red;';
+            //获取页面的高度 相当于爱心下落结束时Y轴的位置
+            var documentHieght = window.innerHeight;
+            //获取页面的宽度，利用这个数来算出，爱心开始时left的值
+            var documentWidth = window.innerWidth;
+            //定义生成一片爱心的毫秒数
+            var lovetime = 10;
+            setInterval(function () { //页面加载之后，定时器就开始工作
+                //随机生成爱心下落 开始 时left的值，相当于开始时X轴的位置
+                var startLeft = Math.random() * documentWidth;
+                //随机生成爱心下落 结束 时left的值，相当于结束时X轴的位置
+                var endLeft = Math.random() * documentWidth;
+                //随机生成爱心大小
+                var flakeSize = 30 + 20 * Math.random();
+                //随机生成爱心下落持续时间
+                var durationTime = 4000 + 7000 * Math.random();
+                //随机生成爱心下落 开始 时的透明度
+                var startOpacity = 0.7 + 0.3 * Math.random();
+                //随机生成爱心下落 结束 时的透明度
+                var endOpacity = 0.2 + 0.2 * Math.random();
+                //克隆一个爱心模板
+                var cloneFlake = flake.cloneNode(true);
+                //随机一个爱心的颜色
+                var colorArr = ['red', 'yellow', 'blue', 'deeppink', 'orange', 'aqua', '#f40'];
+                //console.log(Math.random() * colorArr.length);
+                var s_index = parseInt(Math.random() * colorArr.length);
+                // console.log(s_index);
+                var fcolor = colorArr[s_index];
+                flake.style.color = fcolor;
+                //第一次修改样式，定义克隆出来的爱心的样式
+                cloneFlake.style.cssText += `
+                left: ${startLeft}px;
+                opacity: ${startOpacity};
+                font-size:${flakeSize}px;
+                top:-25px;
+                color:fcolor;
+                transition:${durationTime}ms;
+               `;
+                //拼接到页面中
+                document.body.appendChild(cloneFlake);
+                //设置第二个定时器，一次性定时器，
+                //当第一个定时器生成爱心，并在页面上渲染出来后，修改爱心的样式，让爱心动起来；
+                setTimeout(function () {
+                    //第二次修改样式
+                    cloneFlake.style.cssText += `
+                    left: ${endLeft}px;
+                    top:${documentHieght}px;
+                    opacity:${endOpacity};
+                  `;
+                    //4、设置第三个定时器，当爱心落下后，删除爱心。
+                    setTimeout(function () {
+                        cloneFlake.remove();
+                    }, durationTime);
+                }, 0);
+            }, lovetime);
+        }
+        heart();
+        //var str = `泰戈尔曾经说过，沉默是一种美德，但在喜欢的人面前沉默就是懦弱，be my xxx`;
+        var str = '如今七年过去了，再见小灿，她一脸倦容，斑点隐现，涂的BB霜也是深一层浅一层，甚至假睫毛都已变形。衣服上聚满了毛球，鞋子上布满了褶皱。临时涂的护手霜也掩盖不了枯槁般的手。'
+        // var str =  '';
+        var i = 0;
+
+        function love() {
+            var Lovely = document.getElementById('lovely');
+            if (i <= str.length) {
+                Lovely.innerHTML = str.slice(0, i++) + '_';
+                setTimeout('love()', 200); //递归调用
+            } else {
+                Lovely.innerHTML = str; //结束打字,移除 _ 光标
+            }
+        }
+        love();
+    </script>
+</body>
+
+</html>
